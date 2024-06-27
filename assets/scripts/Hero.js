@@ -3,7 +3,7 @@ cc.Class({
 
     properties: {
         jumpSpeed: cc.v2({ x: 0, y: 300 }),
-        maxJumpDistance: 300,
+        maxJumpDistance: 200,
         jumpSprite: {
             default: null,
             type: cc.SpriteFrame
@@ -21,6 +21,22 @@ cc.Class({
         this.isTouching = false
     },
 
+    onCollisionEnter(other, self) {
+        if (other.node.name === 'diamond') {
+            cc.log('collided')
+            other.node.destroy()
+            this.node.emit('score')
+        }
+    },
+
+    onCollisionStay() {
+        cc.log('collision stay')
+    },
+
+    onCollisionExit() {
+        cc.log('collison exit')
+    },
+
     jump() {
         if (this.isTouching) {
             this.body.linearVelocity = this.jumpSpeed
@@ -35,7 +51,6 @@ cc.Class({
             this.jump()
         }
     },
-
 
     // LIFE- CYCLE CALLBACKS:
     onLoad() {
@@ -119,6 +134,4 @@ cc.Class({
             }
         }
     }
-
-
 });

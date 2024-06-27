@@ -4,8 +4,8 @@ cc.Class({
     properties: {
         xOffsetMin: 60,
         xOffsetMax: 150,
-        yOffsetMin: -100,
-        yOffsetMax: 100,
+        yOffsetMin: -80,
+        yOffsetMax: 80,
         tilesCountMin: 2,
         tilesCountMax: 4,
         platform: {

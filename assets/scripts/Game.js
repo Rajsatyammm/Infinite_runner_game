@@ -1,13 +1,26 @@
+let Globals = require('Globals')
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
+        hero: {
+            default: null,
+            type: cc.Node,
+        },
+        score: {
+            default: null,
+            type: cc.Label,
+        }
     },
-
-    // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
         this.enablePhysics()
+
+        this.hero.on('score', () => {
+            ++Globals.score
+            this.score.string = Globals.score.toString()
+        })
     },
 
     start() {
@@ -16,6 +29,9 @@ cc.Class({
     enablePhysics() {
         let physicsManager = cc.director.getPhysicsManager()
         physicsManager.enabled = true
+
+        let collisionManager = cc.director.getCollisionManager()
+        collisionManager.enabled = true
     },
 
     // update (dt) {},
