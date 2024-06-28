@@ -12,10 +12,6 @@ cc.Class({
             default: null,
             type: cc.Label,
         },
-        gameFinished: {
-            default: null,
-            type: cc.Label,
-        },
         backgroundNode: {
             default: null,
             type: cc.Node,

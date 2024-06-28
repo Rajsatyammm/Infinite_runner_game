@@ -3,7 +3,6 @@ cc.Class({
 
     properties: {
         speed: 50,
-        stopMovingBackground: false,
     },
 
     onLoad() {
@@ -15,11 +14,9 @@ cc.Class({
     },
 
     update(dt) {
-        if (!this.stopMovingBackground) {
-            this.node.children.forEach(node => {
-                this.move(node, dt * this.speed)
-            })
-        }
+        this.node.children.forEach(node => {
+            this.move(node, dt * this.speed)
+        })
     },
 
     move(node, offSet) {

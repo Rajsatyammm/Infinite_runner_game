@@ -24,6 +24,7 @@ cc.Class({
     },
 
     update(dt) {
+        console.log(dt)
         if (this.active) {
             this.node.x -= 150 * dt;
             // get the right platform
