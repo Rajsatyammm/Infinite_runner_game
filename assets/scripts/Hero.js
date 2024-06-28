@@ -10,54 +10,23 @@ cc.Class({
         }
     },
 
-    start() {
-    },
-
-    onBeginContact() {
-        this.isTouching = true
-    },
-
-    onEndContact() {
-        this.isTouching = false
-    },
-
     onCollisionEnter(other, self) {
         if (other.node.name === 'diamond') {
-            cc.log('collided')
             other.node.destroy()
             this.node.emit('score')
         }
     },
 
-    onCollisionStay() {
-        cc.log('collision stay')
-    },
+    // onCollisionStay() {
+    // },
 
-    onCollisionExit() {
-        cc.log('collison exit')
-    },
+    // onCollisionExit() {
+    // },
 
-    jump() {
-        if (this.isTouching) {
-            this.body.linearVelocity = this.jumpSpeed
-            this.isJumpFinished = false
-            this.isJumping = true
-        }
-
-    },
-
-    update() {
-        if (this.isKeyPressed) {
-            this.jump()
-        }
-    },
-
-    // LIFE- CYCLE CALLBACKS:
     onLoad() {
+        this.heroAnimate = this.node.getComponent(cc.Animation)
+        this.heroSprite = this.node.getComponent(cc.Sprite)
 
-    },
-
-    start() {
         this.body = this.getComponent(cc.RigidBody);
         this.isJumping = false;
         this.jumpKeyPressed = false;
@@ -91,6 +60,10 @@ cc.Class({
         });
     },
 
+    start() {
+
+    },
+
     onBeginContact() {
         this.touching = true;
     },
@@ -106,6 +79,24 @@ cc.Class({
 
         if (this.node.y < -cc.winSize.height / 2) {
             this.node.emit('die');
+        }
+
+        this.animate()
+    },
+
+    animate() {
+        // hero is touching to the ground
+        if (this.touching) {
+            if (!this.heroAnimate.getAnimationState('running').isPlaying) {
+                this.heroAnimate.start('running')
+            }
+        }
+        // hero is not touching the ground
+        else {
+            if (this.heroAnimate.getAnimationState('running').isPlaying) {
+                this.heroAnimate.stop('running')
+                this.heroSprite.spriteFrame = this.jumpSprite
+            }
         }
     },
 
