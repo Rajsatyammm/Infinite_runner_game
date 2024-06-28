@@ -19,28 +19,33 @@ cc.Class({
         backgroundNode: {
             default: null,
             type: cc.Node,
+        },
+        music: {
+            default: null,
+            type: cc.AudioClip,
+        },
+        sound: {
+            default: null,
+            type: cc.AudioClip,
         }
     },
 
     onLoad() {
         this.enablePhysics()
+        Globals.score = 0
+        if (!cc.audioEngine.isPlayingMusic)
+            cc.audioEngine.playMusic(this.music, true)
 
         this.hero.on('score', () => {
+            cc.audioEngine.play(this.sound)
             ++Globals.score
             this.score.string = Globals.score.toString()
         })
 
-        this.hero.on('die', () => {
-            this.gameFinished.string = `Game Finished
-Score :: ${Globals.score}`
-            this.node.children.forEach(child => {
-                if (child.name === 'Platforms' || child.name === 'hero' || child.name === 'score') {
-                    child.destroy()
-                }
-            })``
-            this.backgroundNode.getComponent('Background').stopMovingBackground = true
+        this.hero.once('die', () => {
+            cc.audioEngine.stopMusic(this.music)
+            cc.director.loadScene('Score')
         })
-
     },
 
     start() {
