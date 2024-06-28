@@ -11,6 +11,14 @@ cc.Class({
         score: {
             default: null,
             type: cc.Label,
+        },
+        gameFinished: {
+            default: null,
+            type: cc.Label,
+        },
+        backgroundNode: {
+            default: null,
+            type: cc.Node,
         }
     },
 
@@ -21,10 +29,24 @@ cc.Class({
             ++Globals.score
             this.score.string = Globals.score.toString()
         })
+
+        this.hero.on('die', () => {
+            this.gameFinished.string = `Game Finished
+Score :: ${Globals.score}`
+            this.node.children.forEach(child => {
+                if (child.name === 'Platforms' || child.name === 'hero' || child.name === 'score') {
+                    child.destroy()
+                }
+            })``
+            this.backgroundNode.getComponent('Background').stopMovingBackground = true
+        })
+
     },
 
     start() {
     },
+
+    // update (dt) {},
 
     enablePhysics() {
         let physicsManager = cc.director.getPhysicsManager()
@@ -34,5 +56,4 @@ cc.Class({
         collisionManager.enabled = true
     },
 
-    // update (dt) {},
 });

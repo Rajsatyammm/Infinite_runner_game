@@ -10,19 +10,6 @@ cc.Class({
         }
     },
 
-    onCollisionEnter(other, self) {
-        if (other.node.name === 'diamond') {
-            other.node.destroy()
-            this.node.emit('score')
-        }
-    },
-
-    // onCollisionStay() {
-    // },
-
-    // onCollisionExit() {
-    // },
-
     onLoad() {
         this.heroAnimate = this.node.getComponent(cc.Animation)
         this.heroSprite = this.node.getComponent(cc.Sprite)
@@ -64,14 +51,6 @@ cc.Class({
 
     },
 
-    onBeginContact() {
-        this.touching = true;
-    },
-
-    onEndContact() {
-        this.touching = false;
-    },
-
     update(dt) {
         if (this.jumpKeyPressed) {
             this.jump();
@@ -83,6 +62,27 @@ cc.Class({
 
         this.animate()
     },
+
+    onBeginContact() {
+        this.touching = true;
+    },
+
+    onEndContact() {
+        this.touching = false;
+    },
+
+    onCollisionEnter(other, self) {
+        if (other.node.name === 'diamond') {
+            other.node.destroy()
+            this.node.emit('score')
+        }
+    },
+
+    // onCollisionStay() {
+    // },
+
+    // onCollisionExit() {
+    // },
 
     animate() {
         // hero is touching to the ground

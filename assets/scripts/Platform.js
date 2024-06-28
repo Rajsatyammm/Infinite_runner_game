@@ -16,16 +16,27 @@ cc.Class({
         }
     },
 
-    // LIFE-CYCLE CALLBACKS:
+    onLoad() {
 
-    // onLoad () {},
+    },
 
     start() {
     },
 
+    update(dt) {
+        if (this.active) {
+            this.node.x -= 150 * dt;
+            // get the right platform
+            const platformRight = this.node.x + this.node.width;
+            if (platformRight < -cc.winSize.width / 2) {
+                this.active = false;
+            }
+        }
+    },
+
     init(tilesCount, x, y) {
-        // this.active = true;
-        // this.node.removeAllChildren();
+        this.active = true;
+        this.node.removeAllChildren();
 
         // put the node in the desired position
         this.node.setPosition(cc.v2(x, y));
@@ -61,17 +72,6 @@ cc.Class({
                 diamond.setPosition(0, y);
             }
         });
-    },
-
-    update(dt) {
-        this.node.x -= 150 * dt;
-        // if (this.active) {
-        //     this.node.x -= 150 * dt;
-        //     const platformRight = this.node.x + this.node.width;
-        //     if (platformRight < -cc.winSize.width / 2) {
-        //         this.active = false;
-        //     }
-        // }
     },
 
 });

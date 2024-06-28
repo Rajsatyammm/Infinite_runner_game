@@ -18,6 +18,22 @@ cc.Class({
         this.platforms = [];
     },
 
+    start() {
+        this.createPlatform({
+            tilesCount: 2,
+            x: -200,
+            y: -200
+        });
+    },
+
+    update(dt) {
+        const screenRight = cc.winSize.width / 2;
+        const currentPlatformRight = this.current.node.x + this.current.node.width;
+        if (currentPlatformRight < screenRight) {
+            this.createPlatform();
+        }
+    },
+
     generateRandomData() {
         let data = {
             tilesCount: 0,
@@ -39,14 +55,6 @@ cc.Class({
         return data;
     },
 
-    start() {
-        this.createPlatform({
-            tilesCount: 2,
-            x: -200,
-            y: -200
-        });
-    },
-
     createPlatform(data) {
         if (!data) {
             data = this.generateRandomData();
@@ -59,13 +67,5 @@ cc.Class({
         // );
         // this.current.active = true;
         this.current.init(data.tilesCount, data.x, data.y);
-    },
-
-    update(dt) {
-        const screenRight = cc.winSize.width / 2;
-        const currentPlatformRight = this.current.node.x + this.current.node.width;
-        if (currentPlatformRight < screenRight) {
-            this.createPlatform();
-        }
     },
 }); 
